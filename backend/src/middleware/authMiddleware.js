@@ -14,7 +14,7 @@ export const protect = asyncMiddleware(async (req, res, next) => {
     // Check if token is valid
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id).select("-password");
+        req.user = await User.findById(decoded.userId).select("-password");
         next();
     } catch (error) {
         return next(new ErrorResponse("Invalid token, please login again", 401));

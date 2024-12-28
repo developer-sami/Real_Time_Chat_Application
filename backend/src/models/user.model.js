@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter a password"],
     },
     avatar: {
-        type: String,
+        public_id: String,
+        url: String
     },
 
 }, {

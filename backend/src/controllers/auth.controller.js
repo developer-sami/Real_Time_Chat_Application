@@ -4,9 +4,15 @@ import { ErrorResponse } from "../middleware/errorHandler.js";
 import { generateToken } from "../lib/utils.js";
 import cloudinary from "../config/cloudinary.js";
 
+
+// user profile
+export const profile = asyncMiddleware(async (req, res, next) => {
+    res.status(200).json({ success: true, data: req.user });
+});
+
 // signup user-
 export const signup = asyncMiddleware(async (req, res, next) => {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
     let avatar = req.body.avatar || null;
 
     // Check if all fields are provided
@@ -20,30 +26,35 @@ export const signup = asyncMiddleware(async (req, res, next) => {
         return next(new ErrorResponse("User already exists", 400));
     };
 
-    // if user send a image 
+    
+    // Upload avatar if provided
+    let avatarUrl = null;
+    let avatarPublicId = null;
+
     if (avatar) {
         try {
             const result = await cloudinary.uploader.upload(avatar, {
                 folder: "chat-app/avatars",
-                width: 200,
-                height: 200,
+                width: 300,
+                height: 300,
                 crop: "fill",
             });
-            avatar = result.secure_url;
+            avatarUrl = result.secure_url; // Full URL of the image
+            avatarPublicId = result.public_id; // Public ID for deletion
         } catch (error) {
             return next(new ErrorResponse(error.message, 400));
         }
     }
 
     // Create new user 
-    const user = await User.create({ name, email, avatar, password });
+    const user = await User.create({ name, email, password, avatar: { url: avatarUrl, public_id: avatarPublicId } });
 
     // Generate token
     generateToken(user._id, res);
 
     // Send response
     res.status(201).json({ success: true, data: user });
-})
+});
 
 // login user-
 export const login = asyncMiddleware(async (req, res, next) => {
@@ -71,7 +82,7 @@ export const login = asyncMiddleware(async (req, res, next) => {
 
     // Send response
     res.status(200).json({ success: true, data: user });
-})
+});
 
 // logout user-
 export const logout = asyncMiddleware(async (req, res, next) => {
@@ -82,12 +93,44 @@ export const logout = asyncMiddleware(async (req, res, next) => {
         maxAge: 0,
     });
     res.status(200).json({ success: true, data: {} });
-})
+});
+
+// update user-
+export const updateUser = asyncMiddleware(async (req, res, next) => {
+    const id = req.user.id;
+
+    const { name, email } = req.body;
+
+    // Check if all fields are provided
+    if (!email || !name) {
+        return next(new ErrorResponse("Please provide all fields", 400));
+    };
+
+    // Check if email is unique
+    const emailExists = await User.findOne({ email });
+    if (emailExists && emailExists._id.toString() !== id) {
+        return next(new ErrorResponse("Email already exists", 400));
+    };
+
+    // Check if user exists
+    const user = await User.findById(id);
+    if (!user) {
+        return next(new ErrorResponse("User not found", 404));
+    };
+
+    // Update user
+    user.name = name;
+    user.email = email;
+    await user.save();
+
+    // Send response
+    res.status(200).json({ success: true, data: user });
+});
 
 
 // delete user-
 export const deleteUser = asyncMiddleware(async (req, res, next) => {
-    const id = req.params.id;
+    const id = req.user.id;
 
     // Check if user exists
     const user = await User.findById(id);
@@ -96,14 +139,24 @@ export const deleteUser = asyncMiddleware(async (req, res, next) => {
     };
 
     // Delete avatar from cloudinary
-    if (user.avatar) {
-        const publicId = user.avatar.split("/").pop().split(".")[0];
-        await cloudinary.uploader.destroy(publicId);
+    if (user.avatar.public_id !== null) {
+        try {
+            await cloudinary.uploader.destroy(user.avatar.public_id);
+        } catch (error) {
+            return next(new ErrorResponse(error.message, 400));
+        }
     }
 
     // Delete user
-    await user.remove();
+    await User.findByIdAndDelete(id);
+
+    res.cookie("__token", null, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        sameSite: "strict",
+        maxAge: 0,
+    });
 
     // Send response
     res.status(200).json({ success: true, data: {} });
-})
+});

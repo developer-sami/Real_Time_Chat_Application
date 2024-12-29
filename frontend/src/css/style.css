@@ -1,0 +1,550 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* For hide scrollbar */
+html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    max-width: 1550px;
+    margin: auto;
+}
+
+/* loading style*/
+.loading {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2F1793;
+    z-index: 1000;
+}
+
+.loading svg {
+    color: #f4f4f4;
+    font-size: 4rem;
+    animation: rotate 2s linear infinite;
+    /* Rotate continuously */
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+        /* Start at 0 degrees */
+    }
+
+    to {
+        transform: rotate(360deg);
+        /* End at 360 degrees */
+    }
+}
+
+/* style for navbar */
+.info_box {
+    width: 100%;
+    padding: 3px;
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.751);
+}
+
+.info_box p {
+    font-size: .7rem;
+    color: #fff;
+}
+
+.navbar {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #2F1793;
+}
+
+.navbar .logo div {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .logo div svg {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.navbar .logo h1 {
+    font-size: 1rem;
+    color: #fff;
+    margin-left: 6px;
+    user-select: none;
+}
+
+.navbar .links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar .links div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.navbar .links div svg {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.navbar .links a {
+    margin-left: 5px;
+    text-decoration: none;
+    color: #fff
+}
+
+/* style for login page*/
+.login {
+    margin-top: 20px;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    min-height: 80vh;
+}
+
+.login .main_login {
+    max-width: 700px;
+    width: 100%;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    background-color: #301793cb;
+}
+
+.login .main_login .left {
+    width: 50%;
+    height: 100%;
+    display: grid;
+    margin-right: 10px;
+    place-items: center;
+}
+
+.login .main_login .left .login_from {
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.login .main_login .left .login_from h2 {
+    margin-top: 50px;
+    color: #fff;
+}
+
+.login .main_login .left .login_from div {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login .main_login .left .login_from div input {
+    width: 100%;
+    padding: 14px;
+    outline: none !important;
+    border: none;
+    border-radius: 2px;
+}
+
+.login .main_login .left .login_from div label {
+    color: #fff;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+}
+
+.login .main_login .left .login_from div label svg {
+    margin-right: 10px;
+}
+
+.login .main_login .left .login_from button {
+    margin-top: 15px;
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    display: flex;
+    font-size: 1rem;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #2F1793;
+    transition: 0.2s;
+}
+
+.login .main_login .left .login_from button svg {
+    transition: 0.2s;
+}
+
+.login .main_login .left .login_from button:hover {
+    background-color: #220C73;
+}
+
+.login .main_login .left .login_from button:hover svg {
+    margin-left: 4px;
+}
+
+.login .main_login .left .register_link p {
+    color: #f4f4f4;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.login .main_login .left .register_link p a {
+    text-decoration: none;
+    color: #d7d7d7;
+    text-decoration: underline;
+    font-style: normal;
+}
+
+.login .main_login .right {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #2F1793;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 2px solid #fff;
+}
+
+.login .main_login .right h1 {
+    font-size: 3rem;
+    color: #fff;
+}
+
+.login .main_login .right p {
+    color: #f4f4f4;
+}
+
+.login .main_login .right svg {
+    color: #ededed;
+    font-size: 3rem;
+    position: relative;
+    animation: moveLeftToRightBack 2s ease-in-out infinite;
+    /* Adjust timing as needed */
+}
+
+@keyframes moveLeftToRightBack {
+    0% {
+        transform: translateX(0%);
+        /* Start off the screen to the left */
+    }
+
+    50% {
+        transform: translateX(40%);
+        /* Move to the far right */
+    }
+
+    100% {
+        transform: translateX(0%);
+        /* Move back to the far left */
+    }
+}
+
+#register {
+    margin-bottom: 20px !important;
+}
+
+/* style for sidebar */
+
+.sidebar {
+    width: 310px;
+    height: 90vh;
+    border-top: 2px solid #fff;
+    background-color: #2F1793;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+    position: relative;
+    border-top-right-radius: 10px;
+    transition: 0.2s;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+    /* Width of the scrollbar */
+    background-color: #f4f4f4;
+    /* Background color of the scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Color of the scrollbar thumb */
+    border-radius: 4px;
+    /* Rounded corners for the scrollbar thumb */
+}
+
+.sidebar {
+    scrollbar-width: thin;
+    /* Makes the scrollbar thinner */
+    scrollbar-color: #2F1793 #f4f4f4;
+    /* Thumb color and background color */
+}
+
+.sidebar .user {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 87%;
+    height: 60px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+}
+
+.sidebar .user .img {
+    width: 45px;
+    height: 45px;
+    margin-left: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: black;
+}
+
+.sidebar .user .img img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+}
+
+.sidebar .user h3 {
+    color: #464646;
+    margin-left: 10px;
+    font-size: 1rem;
+}
+
+.sidebar_btn button {
+    position: fixed;
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #2F1793 !important;
+    margin-top: 3px;
+    border: none;
+    cursor: pointer;
+    place-items: center;
+    transition: 0.2s;
+    color: #ffffff;
+    font-size: 1.5rem;
+    display: none;
+}
+
+.right_btn button {
+    margin-left: 320px !important;
+}
+
+/* syle for home */
+.home {
+    display: flex;
+}
+
+.chat_container {
+    width: 100%;
+    height: 90vh;
+    padding: 20px;
+    background-color: #301793b4;
+}
+
+.chat_container .text_box {
+    width: 100%;
+    height: 78vh;
+    overflow-y: scroll;
+    margin-bottom: 5px;
+    background-color: rgb(255, 255, 255);
+}
+
+.chat_container .text_box::-webkit-scrollbar {
+    width: 8px;
+    /* Width of the scrollbar */
+    background-color: #f4f4f4;
+    /* Background color of the scrollbar */
+}
+
+.chat_container .text_box::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* Color of the scrollbar thumb */
+    border-radius: 4px;
+    /* Rounded corners for the scrollbar thumb */
+}
+
+.chat_container .text_box {
+    scrollbar-width: thin;
+    /* Makes the scrollbar thinner */
+    scrollbar-color: #2F1793 #f4f4f4;
+    /* Thumb color and background color */
+}
+.send_items{
+    width: 100%;
+    height: 7vh;
+    background-color: #220C73;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.send_items input{
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #f4f4f4;
+    color: #2F1793;
+    margin-left: 5px;
+}
+.send_items div button{
+    width: 60px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    outline: none;
+    background-color: #2F1793;
+    color: #f4f4f4;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: 0.2s;
+}
+.send_items div button:hover{
+    background-color: #180754;
+}
+.send_items .send_btn{
+    width: 8%;
+    height: 40px;
+    margin-right: 4px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    outline: none;
+    background-color: #2F1793;
+    color: #f4f4f4;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.send_items .send_btn:hover{
+    background-color: #180754;
+}
+.text_box{
+    width: 100%;
+    height: auto;
+}
+.text_box .data_container{
+    margin-left: 30px;
+    margin-top: 20px;
+    width: 300px;
+    min-height: 45px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(227, 227, 227);
+}
+.sender_text{
+    margin-left: 73% !important;
+}
+.text_box .data_container .right{
+    width: 270px;
+    margin: auto;
+}
+.text_box .data_container .right .for_img img{
+    width: 270px;
+    height: auto;
+    margin-bottom: 10px;
+}
+.text_box .data_container .right .for_pdf button{
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #2F1793;
+    color: #f4f4f4;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-bottom: 10px;
+}
+.text_box .data_container .right .for_pdf button:hover{
+    background-color: #180754;
+}
+.text_box .data_container .right .for_pdf button svg{
+    margin-right: 10px;
+}
+.text_box .sender_img{
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #180754;
+    margin-left: 10px;
+    background-color: #180754;
+}
+.text_box .sender_img img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+/* style for no chat */
+.no_chat{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #220C73;
+    font-size: 1.5rem;
+}
+.no_chat div h1{
+    font-size: 6rem;
+}
+.no_chat h1{
+    font-size: 1rem;
+}
+/* style for no chat */
+.select_user{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #220C73;
+    font-size: 1.5rem;
+}
+.select_user div h1{
+    font-size: 6rem;
+}
+.select_user h1{
+    font-size: 1rem;
+}

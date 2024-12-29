@@ -9,6 +9,6 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.post('/logout', protect, logout)
 router.put('/update', protect, updateUser);
-router.post("/destroy", protect, deleteUser);
+router.delete("/destroy", protect, deleteUser);
 
 export default router;

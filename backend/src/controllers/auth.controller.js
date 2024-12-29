@@ -13,7 +13,6 @@ export const profile = asyncMiddleware(async (req, res, next) => {
 // signup user-
 export const signup = asyncMiddleware(async (req, res, next) => {
     const { name, email, password } = req.body;
-    let avatar = req.body.avatar || null;
 
     // Check if all fields are provided
     if (!email || !password || !name) {
@@ -26,28 +25,8 @@ export const signup = asyncMiddleware(async (req, res, next) => {
         return next(new ErrorResponse("User already exists", 400));
     };
 
-    
-    // Upload avatar if provided
-    let avatarUrl = null;
-    let avatarPublicId = null;
-
-    if (avatar) {
-        try {
-            const result = await cloudinary.uploader.upload(avatar, {
-                folder: "chat-app/avatars",
-                width: 300,
-                height: 300,
-                crop: "fill",
-            });
-            avatarUrl = result.secure_url; // Full URL of the image
-            avatarPublicId = result.public_id; // Public ID for deletion
-        } catch (error) {
-            return next(new ErrorResponse(error.message, 400));
-        }
-    }
-
     // Create new user 
-    const user = await User.create({ name, email, password, avatar: { url: avatarUrl, public_id: avatarPublicId } });
+    const user = await User.create({ name, email, password });
 
     // Generate token
     generateToken(user._id, res);
@@ -98,6 +77,7 @@ export const logout = asyncMiddleware(async (req, res, next) => {
 // update user-
 export const updateUser = asyncMiddleware(async (req, res, next) => {
     const id = req.user.id;
+    let avatar = req.body.avatar || null;
 
     const { name, email } = req.body;
 
@@ -118,9 +98,29 @@ export const updateUser = asyncMiddleware(async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     };
 
+    // Upload avatar if provided
+    let avatarUrl = null;
+    let avatarPublicId = null;
+
+    if (avatar) {
+        try {
+            const result = await cloudinary.uploader.upload(avatar, {
+                folder: "chat-app/avatars",
+                width: 300,
+                height: 300,
+                crop: "fill",
+            });
+            avatarUrl = result.secure_url; // Full URL of the image
+            avatarPublicId = result.public_id; // Public ID for deletion
+        } catch (error) {
+            return next(new ErrorResponse(error.message, 400));
+        }
+    }
+
     // Update user
     user.name = name;
     user.email = email;
+    user.avatar = { url: avatarUrl, public_id: avatarPublicId };
     await user.save();
 
     // Send response

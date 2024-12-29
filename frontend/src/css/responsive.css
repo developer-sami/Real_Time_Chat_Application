@@ -1,0 +1,70 @@
+@media screen and (max-width: 1100px) {
+    .sidebar {
+        margin-left: -350px !important;
+    }
+    .sidebar_btn button{
+        display: block !important;
+    }
+    .hide{
+        margin-left: -310px !important;
+    }
+    .sidebar_show{
+        margin-left: 0px !important;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .login .main_login .right {
+        display: none;
+    }
+
+    .login .main_login .left {
+        width: 100%;
+    }
+
+    .login .main_login {
+        max-width: 430px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .navbar .logo div svg,
+    .navbar .links a,
+    .navbar .links div svg,
+    .navbar .logo h1 {
+        font-size: .8rem;
+    }
+
+    .navbar {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .login .main_login {
+        max-width: 370px;
+        height: 480px;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .login .main_login {
+        max-width: 330px;
+    }
+
+    .login .main_login .left .login_from {
+        padding: 20px;
+    }
+
+    .navbar .links div {
+        margin-left: 5px;
+    }
+
+    .navbar {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

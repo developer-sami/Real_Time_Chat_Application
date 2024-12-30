@@ -91,7 +91,7 @@ const Profile = () => {
                         <div className="profile_email_sec">
                             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
-                        <button onClick={handleUpodate} disabled={isUpdatingProfile}>
+                        <button onClick={handleUpodate} disabled={isUpdatingProfile} id='update_btn'>
                             {isUpdatingProfile ? "Updating Profile" : "Update"}
                         </button>
                         <br />

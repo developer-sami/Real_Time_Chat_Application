@@ -16,10 +16,11 @@ const Sidebar = () => {
     }, [getAllUsers])
 
 
-    const getChats = (id, img) => {
+    const getChats = (id, img,userName) => {
         setSelectUser(id);
-        selectTheUser(id, img);
+        selectTheUser(id, img, userName);
         getMessages(id);
+        setShowUsers(false);
     }
 
 
@@ -35,7 +36,7 @@ const Sidebar = () => {
             <div className="sidebar_container">
                 <div className={showUsers ? "sidebar sidebar_show" : "sidebar  hide"}>
                     {allUsers.data && allUsers.data.map(user => (
-                        <a key={user._id} onClick={() => getChats(user._id, user.avatar ? user.avatar.url : "") }>
+                        <a key={user._id} onClick={() => getChats(user._id, user.avatar ? user.avatar.url : "", user.name ? user.name : "")}>
                             <div className={selectUser === user._id ? "user active" : "user"} >
                                 <div className="img">
                                     {

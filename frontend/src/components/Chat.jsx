@@ -131,7 +131,8 @@ const Chat = () => {
                                                 <div className="message">
                                                     <p>{message.text}</p>
                                                     <br />
-                                                    <p style={{ fontSize: "10px" }}>{new Date(message.createdAt).toLocaleString()}</p>
+                                                    <p style={{ fontSize: "10px" }}>{new Date(message.createdAt).toLocaleString()} </p>
+                                                    <p style={{ fontSize: "10px" }}>{message.senderId === authUser.data._id ? "sent by: me" : "sent by: " + selectedUser[2]}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +142,8 @@ const Chat = () => {
                                                     <img src={
                                                         selectedUser && selectedUser[1] !== "" ? selectedUser[1] : "https://th.bing.com/th/id/OIP.R_vqbG0cTkojcoRt-UwrUgHaHa?w=192&h=192&c=7&r=0&o=5&dpr=1.3&pid=1.7"
                                                     } />
-                                                </div> : ""
+                                                </div> :
+                                                ""
                                         }
                                     </div>
 
@@ -171,10 +173,10 @@ const Chat = () => {
                 </>
                 :
                 <>
-                    <div className='default_chat_box'> 
-                            <FaRocketchat />
-                            <h3>Welcome to <strong>ChatApp!</strong></h3>
-                            <p>Please select a user from the sidebar</p>
+                    <div className='default_chat_box'>
+                        <FaRocketchat />
+                        <h3>Welcome to <strong>ChatApp!</strong></h3>
+                        <p>Please select a user from the sidebar</p>
                     </div>
                 </>
             }

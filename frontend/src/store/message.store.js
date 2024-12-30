@@ -32,9 +32,9 @@ export const messageStore = create((set, get) => ({
             set({ isMessagesLoading: false });
         }
     },
-    selectTheUser: async (id,image) => {
+    selectTheUser: async (id,image,name) => {
         try {
-            set({ selectedUser: [id,image] });
+            set({ selectedUser: [id,image,name] });
         } catch (error) {
             toast.error("network issue!");
             console.log(error);

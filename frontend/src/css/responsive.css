@@ -1,30 +1,55 @@
+@media screen and (max-width: 1500px) {
+    .chat_container .sender_text {
+        margin-left: 65% !important;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .chat_container .sender_text {
+        margin-left: 60% !important;
+    }
+}
+
 @media screen and (max-width: 1100px) {
     .sidebar {
         margin-left: -350px !important;
     }
-    .sidebar_btn button{
+
+    .sidebar_btn button {
         display: block !important;
     }
-    .hide{
+
+    .hide {
         margin-left: -310px !important;
     }
-    .sidebar_show{
+
+    .sidebar_show {
         margin-left: 0px !important;
     }
 
 }
 
+@media screen and (max-width: 900px) {
+    .chat_container .sender_text {
+        margin-left: 50% !important;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .login .main_login .right {
-        display: none;
+        display: none !important;
     }
 
     .login .main_login .left {
-        width: 100%;
+        width: 100% !important;
     }
 
     .login .main_login {
-        max-width: 430px;
+        max-width: 430px !important;    
+    }
+
+    .chat_container .send_items input {
+        width: 70% !important;
     }
 }
 
@@ -34,37 +59,129 @@
     .navbar .links a,
     .navbar .links div svg,
     .navbar .logo h1 {
-        font-size: .8rem;
+        font-size: .8rem !important;
     }
 
     .navbar {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    .chat_container .sender_text {
+        margin-left: 45% !important;
+    }
+
+    .chat_container .send_items input {
+        width: 50% !important;
+    }
+
+    .chat_container .send_items .send_btn {
+        width: 25% !important;
+
+    }
+}
+
+@media screen and (max-width:650px) {
+    .chat_container .sender_text {
+        margin-left: 40% !important;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .chat_container .sender_text {
+        margin-left: 35% !important;
+    }
+
+    .default_chat_box h3 {
+        font-size: 1rem !important;
+    }
+
+    .default_chat_box svg {
+        font-size: 150px !important;
     }
 }
 
 @media screen and (max-width:500px) {
     .login .main_login {
-        max-width: 370px;
-        height: 480px;
+        max-width: 370px !important;
+        height: 480px !important;
+    }
+
+    .chat_container .sender_text {
+        margin-left: 25% !important;
+    }
+
+    .chat_container .send_items div button {
+        width: 30px !important;
+        font-size: .6rem !important;
+    }
+
+    .chat_container .send_items div button svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .profile_page .main_profile_page {
+        width: 320px !important;
+    }
+}
+
+@media screen and (max-width:450px) {
+    .chat_container .sender_text {
+        margin-left: 17% !important;
+    }
+
+    .profile_page .main_profile_page .profile_email_sec input,
+    .profile_page .main_profile_page .profile_name_input_sec input {
+        width: 270px !important;
+    }
+
+    #update_btn {
+        width: 270px !important;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .chat_container .sender_text {
+        margin-left: 8% !important;
+        background-color: #e2e2e2 !important;
+        border: 1px solid #6D5BB3 !important;
     }
 }
 
 @media screen and (max-width:400px) {
     .login .main_login {
-        max-width: 330px;
+        max-width: 330px !important;
     }
 
     .login .main_login .left .login_from {
-        padding: 20px;
+        padding: 20px !important;
     }
 
     .navbar .links div {
-        margin-left: 5px;
+        margin-left: 5px !important;
     }
 
     .navbar {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 25px !important;
+        padding-right: 15px !important;
+    }
+}
+
+@media screen and (max-width:380px) {
+    .text_box .data_container {
+        width: 290px !important;
+    }
+
+    .text_box .data_container {
+        margin-left: 10px !important;
+    }
+
+    .sidebar {
+        width: 265px !important;
+    }
+
+    .home .right_btn button {
+        margin-left: 270px !important;
     }
 }

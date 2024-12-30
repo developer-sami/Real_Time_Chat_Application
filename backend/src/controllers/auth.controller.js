@@ -26,7 +26,12 @@ export const signup = asyncMiddleware(async (req, res, next) => {
     };
 
     // Create new user 
-    const user = await User.create({ name, email, password });
+    const user = await User.create({
+        name, email, password, avatar: {
+            url: null,
+            public_id: null
+        }
+    });
 
     // Generate token
     generateToken(user._id, res);
@@ -98,12 +103,22 @@ export const updateUser = asyncMiddleware(async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     };
 
-    // Upload avatar if provided
+    // Upload avatar if provided 
     let avatarUrl = null;
     let avatarPublicId = null;
 
     if (avatar) {
         try {
+
+            // Delete avatar from cloudinary
+            if (user.avatar.public_id !== null) {
+                try {
+                    await cloudinary.uploader.destroy(user.avatar.public_id);
+                } catch (error) {
+                    return next(new ErrorResponse(error.message, 400));
+                }
+            };
+
             const result = await cloudinary.uploader.upload(avatar, {
                 folder: "chat-app/avatars",
                 width: 300,
@@ -115,6 +130,9 @@ export const updateUser = asyncMiddleware(async (req, res, next) => {
         } catch (error) {
             return next(new ErrorResponse(error.message, 400));
         }
+    } else {
+        avatarUrl = user.avatar.url;
+        avatarPublicId = user.avatar.public_id;
     }
 
     // Update user

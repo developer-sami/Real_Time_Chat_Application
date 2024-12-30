@@ -16,15 +16,27 @@ const Navbar = () => {
         </div>
         <div className='navbar'>
             <div className="logo">
-                <div>
-                    <FaRocketchat />
-                    <h1>Chat App</h1>
-                </div>
+                <Link to="/">
+                    <div>
+                        <FaRocketchat />
+                        <h1>Chat App</h1>
+                    </div>
+                </Link>
             </div>
             {
                 authUser && authUser ?
                     <div className="links">
-
+                        <div className='profile'>
+                            <div>
+                                <Link to={`/profile`}>
+                                    {authUser.data.avatar && authUser.data.avatar.url !== null ?
+                                        <img src={authUser.data.avatar.url} alt="users" />
+                                        :
+                                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" />
+                                    }
+                                </Link>
+                            </div>
+                        </div>
                         <div>
                             <CiLogout />
                             <a onClick={() => LogOut()}>Logout</a>

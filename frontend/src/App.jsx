@@ -10,6 +10,7 @@ import { authStore } from './store/auth.store'
 import { useEffect } from 'react'
 import Home from './pages/Home';
 import { Toaster } from "react-hot-toast"
+import Profile from './pages/Profile';
 
 
 const App = () => {
@@ -22,19 +23,23 @@ const App = () => {
   return (
     <>
       {
-        isCheckingAuth &&
-        <div className='loading'>
-          <ImSpinner8 className='spinner' />
-        </div>
+        isCheckingAuth && isCheckingAuth ?
+          <div className='loading'>
+            <ImSpinner8 className='spinner' />
+          </div>
+          :
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" />} />
+              <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
+              <Route path='/register' element={authUser ? <Navigate to="/" /> : <Register />} />
+              <Route path='/profile' element={!authUser ? <Navigate to="/" /> : <Profile />} />
+            </Routes>
+            <Toaster position="top-right"
+              reverseOrder={false} />
+          </>
       }
-      <Navbar />
-      <Routes>
-        <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
-        <Route path='/register' element={authUser ? <Navigate to="/" /> : <Register />} />
-      </Routes>
-      <Toaster position="top-right"
-        reverseOrder={false} />
     </>
   )
 }

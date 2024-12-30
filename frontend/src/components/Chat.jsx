@@ -5,37 +5,67 @@ import { toast } from "react-hot-toast"
 import { messageStore } from '../store/message.store';
 import { authStore } from '../store/auth.store';
 import { FaRocketchat } from "react-icons/fa";
+
 const Chat = () => {
 
-    const { messages, isMessagesLoading, isClicked } = messageStore();
-    const { authUser } = authStore();
+    const { selectedUser, messages, sendMessage } = messageStore();
+    const { authUser } = authStore()
 
     const [message, setMessage] = useState("");
-    const [base64Image, setBase64Image] = useState("");
-    const [base64PDF, setBase64PDF] = useState("");
+    const [base64Image, setBase64Image] = useState(null);
+    const [base64PDF, setBase64PDF] = useState(null);
 
-    // Function to convert file to Base64
-    const handleFileChange = (e, type) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (type === "image") {
-                    setBase64Image(reader.result); // Store Base64 image data in state
-                } else if (type === "pdf") {
-                    setBase64PDF(reader.result); // Store Base64 PDF data in state
-                }
-            };
-            reader.readAsDataURL(file); // Convert the file to Base64
+    // Function to scroll to the bottom of the chat box 
+    const chatBoxRef = useRef(null);
+    const scrollToBottom = () => {
+        const chatBox = chatBoxRef.current;
+        if (chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
     };
 
-    // Function to handle image upload
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    // Function to handle file selection
+    const handleFileChange = (e, type) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (type === "image") {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setBase64Image(reader.result);
+                };
+                reader.readAsDataURL(file);
+                toast.success("Image selected successfully");
+            } else if (type === "pdf") {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setBase64PDF(reader.result);
+                };
+                reader.readAsDataURL(file);
+                toast.success("PDF selected successfully");
+            }
+        }
+    };
+
     const handleUpload = () => {
-        if (message == "") {
-            toast.error("Please enter a message first or select a file.");
+        if (!message && !base64Image && !base64PDF) {
+            toast.error("Please enter a message or select an image or PDF file");
             return;
         }
+        const payload = {
+            text: message,
+            image: base64Image,
+            pdf: base64PDF,
+        };
+        sendMessage(selectedUser, payload);
+
+        setMessage("");
+        setBase64Image(null);
+        setBase64PDF(null);
+
     };
 
     // Function to handle keyboard press (enter key)
@@ -45,26 +75,10 @@ const Chat = () => {
         }
     }
 
-    // Function to scroll to the bottom of the chat box  const chatBoxRef = useRef(null);
-
-    // Function to scroll to the bottom
-    const chatBoxRef = useRef(null);
-    const scrollToBottom = () => {
-        const chatBox = chatBoxRef.current;
-        if (chatBox) {
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    };
-
-    // Scroll to the bottom when messages change
-    useEffect(() => {
-        scrollToBottom();
-    }, []);
-
     return (
         <>
 
-            {/* Hidden input for file selection */}
+            {/* Hidden input for image and pdf selection */}
             <input
                 type="file"
                 accept="image/*"
@@ -73,7 +87,6 @@ const Chat = () => {
                 onChange={(e) => handleFileChange(e, "image")}
             />
 
-            {/* Hidden input for PDF selection */}
             <input
                 type="file"
                 accept="application/pdf"
@@ -82,47 +95,66 @@ const Chat = () => {
                 onChange={(e) => handleFileChange(e, "pdf")}
             />
 
-            {isClicked ? <>
-                {isMessagesLoading ? <div className="loader"></div > :
-
+            {selectedUser ?
+                <>
                     <div className="chat_container">
                         <div className="text_box" ref={chatBoxRef}>
-                            {messages.messages && messages.messages.map(message => (
+                            {messages && messages.length === 0 ?
                                 <div>
-                                    <div className="data_container sender_text" >
-                                        <div className="right">
-                                            {message.image.url !== null ?
-                                                <div className="for_img">
-                                                    <img src={message.image.url} />
-                                                </div> : ""}
-                                            {message.pdf.url !== null ?
+                                    <h3 style={{ textAlign: "center", marginTop: "20px", color: "#464646" }}>No conversation!</h3>
+                                </div>
+                                : ""}
+                            {messages && messages.map((message, index) => (
+                                <>
+                                    <div key={index}>
+                                        {/* sender_text */}
+                                        {/* className="data_container" */}
+                                        <div className={message.senderId === authUser.data._id ? "data_container sender_text" : "data_container"} >
+                                            <div className="right">
+                                                {message.image.url !== null ?
+                                                    <div className="for_img">
+                                                        <img src={message.image.url} />
+                                                    </div>
+                                                    : ""
+                                                }
+
                                                 <div className='for_pdf'>
-                                                    <a download={message.pdf.url} href={message.pdf.url}>
-                                                        <button>
-                                                            <FaFilePdf />
-                                                            Download PDF
-                                                        </button>
-                                                    </a>
-                                                </div> : ""}
-                                            <div className="message">
-                                                <p>{message.text}</p>
+                                                    {message.pdf.url !== null ?
+                                                        <a download={message.pdf.url} href={message.pdf.url}>
+                                                            <button>
+                                                                <FaFilePdf />
+                                                                Download PDF
+                                                            </button>
+                                                        </a> : ""
+                                                    }
+                                                </div>
+                                                <div className="message">
+                                                    <p>{message.text}</p>
+                                                    <br />
+                                                    <p style={{ fontSize: "10px" }}>{new Date(message.createdAt).toLocaleString()}</p>
+                                                </div>
                                             </div>
                                         </div>
+                                        {
+                                            message.senderId !== authUser.data._id ?
+                                                <div className="sender_img" >
+                                                    <img src={
+                                                        selectedUser && selectedUser[1] !== "" ? selectedUser[1] : "https://th.bing.com/th/id/OIP.R_vqbG0cTkojcoRt-UwrUgHaHa?w=192&h=192&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                                                    } />
+                                                </div> : ""
+                                        }
                                     </div>
+
                                     {
-                                        authUser.data._id == message.senderId ? "" :
-                                            <div className="sender_img" >
-                                                <img src="https://th.bing.com/th/id/OIP.c17XAqg6srb_lo1ElbyJSgHaEK?w=310&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
-                                            </div>
+                                        messages.messages && messages.messages.length == 0 ? <div className="no_msg">
+                                            <p style={{ textAlign: "center", marginTop: "20px", color: "#2F1793" }}>No messages found!</p>
+                                        </div> : ""
                                     }
-                                </div>
+                                </>
                             ))}
 
-                            {
-                                messages.messages && messages.messages.length == 0 ? <div className="no_msg">
-                                    <p style={{ textAlign: "center", marginTop: "20px" }}>No messages</p>
-                                </div> : ""
-                            }
+
+
 
                         </div>
                         <div className="send_items">
@@ -132,19 +164,20 @@ const Chat = () => {
                             <div>
                                 <button onClick={() => document.getElementById("pdfInput").click()}><FaFilePdf /></button>
                             </div>
-                            <input onKeyDown={handleKeyDown} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="Type a message..." />
+                            <input onKeyDown={handleKeyDown} onChange={(e) => setMessage(e.target.value)} value={message} type="text" placeholder="Type a message..." />
                             <button className='send_btn' onClick={handleUpload}>Send</button>
                         </div>
                     </div>
-                }
-
-            </> : <div className="select_user">
-                <div>
-                    <h1><FaRocketchat/></h1>
-                </div>
-                <h1>Please select a user</h1>
-            </div>}
-
+                </>
+                :
+                <>
+                    <div className='default_chat_box'> 
+                            <FaRocketchat />
+                            <h3>Welcome to <strong>ChatApp!</strong></h3>
+                            <p>Please select a user from the sidebar</p>
+                    </div>
+                </>
+            }
         </>
     )
 }

@@ -53,6 +53,23 @@ body {
 }
 
 /* style for navbar */
+.profile div a {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+}
+
+.profile img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
 .info_box {
     width: 100%;
     padding: 3px;
@@ -321,6 +338,10 @@ body {
     background-color: rgb(255, 255, 255);
 }
 
+.sidebar .active {
+    border: 6px solid #6D5BB3;
+}
+
 .sidebar .user .img {
     width: 45px;
     height: 45px;
@@ -368,6 +389,35 @@ body {
     display: flex;
 }
 
+.default_chat_box {
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: red; */
+}
+
+.default_chat_box svg {
+    font-size: 200px;
+    color: #2F1793;
+    margin-bottom: 20px;
+}
+
+.default_chat_box h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.default_chat_box h3 strong {
+    color: #2F1793;
+}
+
+.default_chat_box p {
+    color: #696868;
+}
+
 .chat_container {
     width: 100%;
     height: 90vh;
@@ -403,7 +453,8 @@ body {
     scrollbar-color: #2F1793 #f4f4f4;
     /* Thumb color and background color */
 }
-.send_items{
+
+.send_items {
     width: 100%;
     height: 7vh;
     background-color: #220C73;
@@ -413,7 +464,8 @@ body {
     margin-bottom: 10px;
     border-radius: 5px;
 }
-.send_items input{
+
+.send_items input {
     width: 80%;
     padding: 10px;
     border: none;
@@ -423,7 +475,8 @@ body {
     color: #2F1793;
     margin-left: 5px;
 }
-.send_items div button{
+
+.send_items div button {
     width: 60px;
     height: 40px;
     border: none;
@@ -436,10 +489,12 @@ body {
     font-size: 1.3rem;
     transition: 0.2s;
 }
-.send_items div button:hover{
+
+.send_items div button:hover {
     background-color: #180754;
 }
-.send_items .send_btn{
+
+.send_items .send_btn {
     width: 8%;
     height: 40px;
     margin-right: 4px;
@@ -452,14 +507,17 @@ body {
     cursor: pointer;
     transition: 0.2s;
 }
-.send_items .send_btn:hover{
+
+.send_items .send_btn:hover {
     background-color: #180754;
 }
-.text_box{
+
+.text_box {
     width: 100%;
     height: auto;
 }
-.text_box .data_container{
+
+.text_box .data_container {
     margin-left: 30px;
     margin-top: 20px;
     width: 300px;
@@ -469,19 +527,23 @@ body {
     margin-bottom: 10px;
     background-color: rgb(227, 227, 227);
 }
-.sender_text{
+
+.sender_text {
     margin-left: 73% !important;
 }
-.text_box .data_container .right{
+
+.text_box .data_container .right {
     width: 270px;
     margin: auto;
 }
-.text_box .data_container .right .for_img img{
+
+.text_box .data_container .right .for_img img {
     width: 270px;
     height: auto;
     margin-bottom: 10px;
 }
-.text_box .data_container .right .for_pdf button{
+
+.text_box .data_container .right .for_pdf button {
     width: 100%;
     height: 40px;
     border: none;
@@ -493,29 +555,34 @@ body {
     transition: 0.2s;
     margin-bottom: 10px;
 }
-.text_box .data_container .right .for_pdf button:hover{
+
+.text_box .data_container .right .for_pdf button:hover {
     background-color: #180754;
 }
-.text_box .data_container .right .for_pdf button svg{
+
+.text_box .data_container .right .for_pdf button svg {
     margin-right: 10px;
 }
-.text_box .sender_img{
+
+.text_box .sender_img {
     width: 40px;
     height: 40px;
     margin-top: 5px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #180754;
+    border: 1px solid #180754;
     margin-left: 10px;
     background-color: #180754;
 }
-.text_box .sender_img img{
+
+.text_box .sender_img img {
     width: 40px;
     height: 40px;
     object-fit: cover;
 }
+
 /* style for no chat */
-.no_chat{
+.no_chat {
     width: 100%;
     height: 90vh;
     display: flex;
@@ -525,14 +592,17 @@ body {
     color: #220C73;
     font-size: 1.5rem;
 }
-.no_chat div h1{
+
+.no_chat div h1 {
     font-size: 6rem;
 }
-.no_chat h1{
+
+.no_chat h1 {
     font-size: 1rem;
 }
+
 /* style for no chat */
-.select_user{
+.select_user {
     width: 100%;
     height: 90vh;
     display: flex;
@@ -542,9 +612,97 @@ body {
     color: #220C73;
     font-size: 1.5rem;
 }
-.select_user div h1{
+
+.select_user div h1 {
     font-size: 6rem;
 }
-.select_user h1{
+
+.select_user h1 {
     font-size: 1rem;
+}
+
+/* profile page design */
+
+.profile_page {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_page .main_profile_page {
+    width: 340px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #2F1793;
+}
+
+.profile_page .main_profile_page .profile_img_sec {
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+    border-radius: 50%;
+    position: relative;
+}
+.profile_page .main_profile_page .profile_img_sec button{
+    position: absolute;
+    z-index: 9999;
+    bottom: 2%;
+    right: 2%;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #180754;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.profile_page .main_profile_page .profile_img_sec img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile_page .main_profile_page .profile_name_sec {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+}
+
+.profile_page .main_profile_page .profile_email_sec input,
+.profile_page .main_profile_page .profile_name_input_sec input {
+    width: 280px;
+    padding: 12px;
+    outline: none;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.profile_page .main_profile_page .profile_email_sec input {
+    margin-top: 5px;
+}
+.profile_page button{
+    width: 280px;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: #d3d3d3;
+    transition: 0.2s;
+    font-weight: 700;
+}
+.profile_page button:hover{
+    background-color: #180754;
+    color: white;
+}
+.profile_page a{
+    color: #fff;
 }

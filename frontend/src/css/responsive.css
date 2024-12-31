@@ -45,7 +45,7 @@
     }
 
     .login .main_login {
-        max-width: 430px !important;    
+        max-width: 430px !important;
     }
 
     .chat_container .send_items input {
@@ -138,6 +138,10 @@
 
     #update_btn {
         width: 270px !important;
+    }
+
+    .home .chat_container .text_box {
+        height: 70vh !important;
     }
 }
 

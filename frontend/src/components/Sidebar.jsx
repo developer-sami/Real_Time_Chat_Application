@@ -14,9 +14,6 @@ const Sidebar = () => {
     const { getAllUsers, allUsers, getMessages, selectTheUser } = messageStore();
     const [showUsers, setShowUsers] = useState(false);
 
-    console.log(online);
-
-
     useEffect(() => {
         getAllUsers();
         setOnline(onLineUser);

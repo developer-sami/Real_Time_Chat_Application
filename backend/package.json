@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "author": "SAMI",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chat-app": "file:..",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

@@ -61,7 +61,7 @@ const Login = () => {
               <label htmlFor="password"><MdOutlinePassword /> Password</label>
               <input onChange={handleChange} type="text" id="password" placeholder='password' />
             </div>
-            <button onClick={() => SubmitEvent()} disabled={isLoading}>Login <CiLogin /></button>
+            <button onClick={() => SubmitEvent()} disabled={isLoading}>{isLoading ? "Loading..." : "Login"} <CiLogin /></button>
             <br />
             <div className="register_link">
               <p>Don't have an account? <Link to="/register">Register</Link></p>

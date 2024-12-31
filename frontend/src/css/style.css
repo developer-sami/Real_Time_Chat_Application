@@ -633,8 +633,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
-
+.profile_page #delete_btn{
+    margin-top: 5px;
+    border: 2px dotted red;
+    background-color: transparent;
+}
+.profile_page #delete_btn:hover{
+    background-color: red;
+}
 .profile_page .main_profile_page {
     width: 340px;
     height: 500px;

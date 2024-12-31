@@ -5,12 +5,12 @@ import { MdOutlinePassword } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { LuMoveRight } from "react-icons/lu";
 import { Link } from "react-router-dom";
-import {toast} from "react-hot-toast"
+import { toast } from "react-hot-toast"
 import { authStore } from '../store/auth.store';
 
 const Register = () => {
 
-    const {isSignInUp,signUp} = authStore();
+    const { isSignInUp, signUp } = authStore();
 
     // State to store form data
     const [formData, setFormData] = useState({
@@ -85,7 +85,7 @@ const Register = () => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <button disabled={isSignInUp} type="submit">Register <CiLogin /></button>
+                            <button disabled={isSignInUp} type="submit">{isSignInUp ? "Registering..." : "Register"} <CiLogin /></button>
                         </form>
                         <div className="register_link">
                             <p>Have an account? <Link to="/login">Login</Link></p>

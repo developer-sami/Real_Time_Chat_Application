@@ -4,6 +4,7 @@ import { authStore } from '../store/auth.store'
 import { useState } from 'react';
 import { FaCamera } from "react-icons/fa6";
 import { toast } from "react-hot-toast"
+import { axiosInstance } from '../lib/axios';
 
 const Profile = () => {
 
@@ -41,7 +42,7 @@ const Profile = () => {
 
 
     const handleUpodate = async () => {
-        if (name === authUser.data.name && email === authUser.data.email && authUser.data.avatar.url === avatar) {
+        if (name === authUser.data.name && email === authUser.data.email && authUser.data.avatar.url === avatar && avatar === "https://cdn-icons-png.flaticon.com/512/149/149071.png") {
             toast.error("No changes made");
             return
         }
@@ -56,6 +57,17 @@ const Profile = () => {
 
         updateProfile({ name, email, avatar });
     };
+
+    // delete account
+    const deleteAccount = async () => {
+        try {
+            authStore.getState().LogOut();
+            await axiosInstance.delete('/auth/destroy');
+            toast.success('Account deleted successfully');
+        } catch (error) {
+            toast.error(error.response.data.error);
+        }
+    }
 
 
     return (
@@ -97,6 +109,11 @@ const Profile = () => {
                         <br />
                         <Link to={'/'}>go back</Link>
                     </div>
+                    <br />
+                    <p>want to delete your account?</p>
+                    <button id='delete_btn' onClick={() => deleteAccount()}>
+                        Delete Account
+                    </button>
                 </div>
             </>
                 : ""}

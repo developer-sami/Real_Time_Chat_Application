@@ -41,21 +41,24 @@ export const authStore = create((set, get) => ({
         } catch (error) {
             toast.error(error.response.data.error);
             console.log(error);
-            
+
         } finally {
             set({ isSignInUp: false });
         }
     },
 
     login: async (data) => {
+        set({ isLoading: true });
         try {
             const res = await axiosInstance.post('/auth/login', data);
             set({ authUser: res.data });
             toast.success('Logged in successfully');
 
             get().connectSocket();
+            set({ isLoading: false });
         } catch (error) {
             toast.error(error.response.data.error);
+            set({ isLoading: false });
         }
     },
 

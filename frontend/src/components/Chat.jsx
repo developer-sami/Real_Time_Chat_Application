@@ -8,7 +8,7 @@ import { FaRocketchat } from "react-icons/fa";
 
 const Chat = () => {
 
-    const { selectedUser, messages, sendMessage } = messageStore();
+    const { selectedUser, messages, sendMessage, subscribeToMessage, unSubscribeFromMessage } = messageStore();
     const { authUser } = authStore()
 
     const [message, setMessage] = useState("");
@@ -26,7 +26,9 @@ const Chat = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+        subscribeToMessage();
+        return () => unSubscribeFromMessage();
+    }, [messages, subscribeToMessage,unSubscribeFromMessage]);
 
     // Function to handle file selection
     const handleFileChange = (e, type) => {
@@ -140,7 +142,7 @@ const Chat = () => {
                                             message.senderId !== authUser.data._id ?
                                                 <div className="sender_img" >
                                                     <img src={
-                                                        selectedUser && selectedUser[1] !== "" ? selectedUser[1] : "https://th.bing.com/th/id/OIP.R_vqbG0cTkojcoRt-UwrUgHaHa?w=192&h=192&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                                                        selectedUser && selectedUser[1] !== null ? selectedUser && selectedUser[1] : "https://th.bing.com/th/id/OIP.R_vqbG0cTkojcoRt-UwrUgHaHa?w=192&h=192&c=7&r=0&o=5&dpr=1.3&pid=1.7"
                                                     } />
                                                 </div> :
                                                 ""

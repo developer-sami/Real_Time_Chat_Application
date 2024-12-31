@@ -5,9 +5,8 @@ import db from "./lib/db.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import { app, server } from "./lib/socket.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-
-const app = express();
 
 app.use(express.json({ limit: '15mb' }));
 app.use(cookieParser());
@@ -26,7 +25,7 @@ app.use("/api/v1/message", messageRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("server started on port " + PORT);
     db();
 });

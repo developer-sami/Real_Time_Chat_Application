@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import { asyncMiddleware } from "../utils/asyncMiddleware.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import cloudinary from "../config/cloudinary.js";
+import { io, getReciverSocketId } from "../lib/socket.js";
 
 // get all users from database to show in the sidebar
 export const getAllUser = asyncMiddleware(async (req, res, next) => {
@@ -92,6 +93,17 @@ export const sendMessage = asyncMiddleware(async (req, res, next) => {
             public_id: cloud_pdf ? cloud_pdf.public_id : null,
         },
     });
+
+    // add socket.io 
+    const reviverSocketId = getReciverSocketId(otherUserId);
+
+    if (reviverSocketId) {
+        io.to(reviverSocketId).emit("newMessage", message);
+        console.log(reviverSocketId);
+
+    }
+
+
     res.status(200).json({ success: true, data: message });
 });
 

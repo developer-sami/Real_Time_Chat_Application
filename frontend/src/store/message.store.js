@@ -32,13 +32,13 @@ export const messageStore = create((set, get) => ({
             set({ isMessagesLoading: false });
         }
     },
-    selectTheUser: async (id,image,name) => {
+    selectTheUser: async (id, image, name) => {
         try {
-            set({ selectedUser: [id,image,name] });
+            set({ selectedUser: [id, image, name] });
         } catch (error) {
             toast.error("network issue!");
             console.log(error);
-            
+
         }
     },
     sendMessage: async (selectedUser, messageData) => {
@@ -46,13 +46,29 @@ export const messageStore = create((set, get) => ({
         try {
             const res = await axiosInstance.post(`/message/send/${selectedUser[0]}`, messageData);
             set({ messages: [...messages, res.data.data] });
-            console.log(selectedUser.id);
-            
 
         } catch (error) {
             toast.error("Error sending message");
             console.log(error);
         }
+    },
+
+    subscribeToMessage: () => {
+        const { selectedUser } = get();
+        if (!selectedUser) return;
+
+        const socket = authStore.getState().socket;
+
+        socket.on("newMessage",(newMessage)=>{
+            set({ messages: [...get().messages, newMessage] });
+        })
+        
+
+    },
+
+    unSubscribeFromMessage: () => {
+        const socket = authStore.getState().socket;
+        socket.off("newMessage");
     },
 
 }));

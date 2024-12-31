@@ -5,18 +5,25 @@ import { messageStore } from '../store/message.store';
 import { authStore } from '../store/auth.store';
 
 const Sidebar = () => {
-
     const [selectUser, setSelectUser] = useState()
+    const { onLineUser } = authStore();
+
+    const [online, setOnline] = useState(onLineUser);
+
 
     const { getAllUsers, allUsers, getMessages, selectTheUser } = messageStore();
     const [showUsers, setShowUsers] = useState(false);
 
+    console.log(online);
+
+
     useEffect(() => {
         getAllUsers();
-    }, [getAllUsers])
+        setOnline(onLineUser);
+        // return () => unSubscribeFromMessage();
+    }, [getAllUsers, onLineUser])
 
-
-    const getChats = (id, img,userName) => {
+    const getChats = (id, img, userName) => {
         setSelectUser(id);
         selectTheUser(id, img, userName);
         getMessages(id);
@@ -51,6 +58,16 @@ const Sidebar = () => {
                                             user.name.length > 20 ? user.name.slice(0, 20) + "..." : user.name
                                         }
                                     </h3>
+                                    <p>
+                                        {online && online.includes(user._id) ?
+                                            <p style={{ color: "green", marginLeft: "10px", fontWeight: "bold", fontSize: "12px" }}>
+                                                Online
+                                            </p> :
+                                            <p style={{ color: "red", marginLeft: "10px", fontWeight: "bold", fontSize: "12px" }}>
+                                                Offline
+                                            </p>
+                                        }
+                                    </p>
                                 </div>
                             </div>
                         </a>

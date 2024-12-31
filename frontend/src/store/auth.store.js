@@ -40,6 +40,8 @@ export const authStore = create((set, get) => ({
             get().connectSocket();
         } catch (error) {
             toast.error(error.response.data.error);
+            console.log(error);
+            
         } finally {
             set({ isSignInUp: false });
         }

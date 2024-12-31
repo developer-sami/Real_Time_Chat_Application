@@ -28,7 +28,7 @@ const Chat = () => {
         scrollToBottom();
         subscribeToMessage();
         return () => unSubscribeFromMessage();
-    }, [messages, subscribeToMessage,unSubscribeFromMessage]);
+    }, [messages, subscribeToMessage, unSubscribeFromMessage]);
 
     // Function to handle file selection
     const handleFileChange = (e, type) => {
@@ -41,7 +41,8 @@ const Chat = () => {
                 };
                 reader.readAsDataURL(file);
                 toast.success("Image selected successfully");
-            } else if (type === "pdf") {
+            };
+            if (type === "pdf") {
                 const reader = new FileReader();
                 reader.onloadend = () => {
                     setBase64PDF(reader.result);
@@ -62,11 +63,12 @@ const Chat = () => {
             image: base64Image,
             pdf: base64PDF,
         };
+        
         sendMessage(selectedUser, payload);
 
-        setMessage("");
-        setBase64Image(null);
         setBase64PDF(null);
+        setBase64Image(null);
+        setMessage("");
 
     };
 

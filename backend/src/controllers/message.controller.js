@@ -4,19 +4,6 @@ import { asyncMiddleware } from "../utils/asyncMiddleware.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import cloudinary from "../config/cloudinary.js";
 import { io, getReciverSocketId } from "../lib/socket.js";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
-// create pdf folder
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const pdfFolder = path.join(__dirname, "pdf");
-
-if (!fs.existsSync(pdfFolder)) {
-    fs.mkdirSync(pdfFolder, { recursive: true });
-}
 
 // get all users from database to show in the sidebar
 export const getAllUser = asyncMiddleware(async (req, res, next) => {
@@ -84,18 +71,8 @@ export const sendMessage = asyncMiddleware(async (req, res, next) => {
     let pdf_url = null;
     if (pdf) {
         try {
-            // Decode Base64 PDF data and save it locally
-            const base64Data = pdf.replace(/^data:application\/pdf;base64,/, "");
-            const pdfFileName = `upload_${Date.now()}.pdf`;
-            const pdfFilePath = path.join(pdfFolder, pdfFileName);
-
-            // Save the PDF
-            fs.writeFileSync(pdfFilePath, Buffer.from(base64Data, "base64"));
-
-            // Set the local file path as the URL (you can adjust this for your frontend)
-            pdf_url = `/pdf/${pdfFileName}`;
+            
         } catch (error) {
-            console.error("Error saving PDF:", error);
             return next(new ErrorResponse("Failed to process PDF upload", 500));
         }
     }

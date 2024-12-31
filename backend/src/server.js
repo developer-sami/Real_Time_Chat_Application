@@ -9,6 +9,8 @@ import { app, server } from "./lib/socket.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import path from "path";
 
+// Initialize __dirname in ES Modules
+
 app.use(express.json({ limit: '15mb' }));
 app.use(cookieParser());
 app.use(cors({
